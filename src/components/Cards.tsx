@@ -1,18 +1,28 @@
-import { Alert, Button, Image, Text, View } from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import INote from "../interfaces/NoteInterface";
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { useEffect, useState } from "react";
 import { getDateFormated } from "../utils/ConverteDate";
 import NoteService from "../services/NoteService";
+import { useNavigation } from '@react-navigation/native';
+import StorageService from "../services/StorageService";
 
-export default function Cards({note, getList} : {note: INote, getList: Function})
- {
+export default function Cards({note, getList} : {note: INote, getList: Function}) {
     const [date, setDate] = useState(note.creation_date as any);
+    const [username, setUsername] = useState("" as string);
+    const navigation = useNavigation();
 
-    useEffect(()=>{
+
+    const getUsername = async () => {
+        const user = await StorageService.getStorage("username");
+        setUsername(user);
+    }
+
+    useEffect(() => {
        const date = getDateFormated(note.creation_date);
        setDate(date);
-    },[])
+       getUsername();
+    }, []);
 
     const createTwoButtonAlert = (id : string) =>
     Alert.alert(
@@ -30,8 +40,13 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
 
     const deleteNote = async (id : string) => {
         await NoteService.deleteNote(id);
-        getList();        
-    }
+        getList();
+    };
+
+    const goToDetail = () => {
+        console.log("goToDetail");
+        navigation.navigate("Detail", {id: note._id});
+    };
 
     return (
         <View style={{backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10}}>
@@ -61,9 +76,18 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
                     </View>
                 </View>
             </View>
-            <View style={{justifyContent: "flex-end", alignItems: "flex-end"}}>
-                <Ionicons size={20} name="chevron-forward-outline"></Ionicons>
-            </View>  
+            {
+                username === note.author ? (
+                    <View style={{justifyContent: "flex-end", alignItems: "flex-end"}}>
+                        <TouchableOpacity
+                            style={{marginTop:'5%', backgroundColor: "#57A0D2", borderRadius: 10, alignItems: 'center', paddingHorizontal: 32, paddingVertical: 12}}
+                            onPress={goToDetail}
+                        >
+                            <Ionicons size={20} name="chevron-forward-outline"></Ionicons>
+                        </TouchableOpacity>
+                    </View>  
+                ) : null
+            }            
         </View>
     )
 }

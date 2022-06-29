@@ -31,6 +31,9 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name='Connexion' component={Connexion}></Stack.Screen>
+        <Stack.Group screenOptions={{ headerShown: true, presentation: 'modal' }}>
+          <Stack.Screen name="Detail" component={Detail} />
+        </Stack.Group>
         <Stack.Screen name='BottomTabNavigation' component={BottomTabNavigation}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
