@@ -35,12 +35,11 @@ export default function MyNotes({navigation} : {navigation: any}) {
 
     return (
         <ScrollView>
-            <Text onPress={()=>{navigation.navigate("Connexion")}}>Page MyNotes</Text>
             <TextInput
-                style={{marginTop:'5%', justifyContent: "center", backgroundColor: "#ededed", borderColor: "gray",width: "90%",borderWidth: 1,borderRadius: 10,padding: 10}}
+                style={{marginTop:'5%', backgroundColor: "#ededed", borderColor: "gray",width: "90%",borderWidth: 1,borderRadius: 10,padding: 10}}
                 onChangeText={(text) => filtreNoteListByTag(text)}
                 value={searchedTag}
-
+                placeholder="Recherche par tags"
             />
             {
                 displayNoteList.length ? displayNoteList.map((note:INote, idx:number) =>{
