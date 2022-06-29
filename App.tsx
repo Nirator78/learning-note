@@ -12,7 +12,7 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen options={{tabBarIcon: ({ color }) => (
           <Ionicons name="home" size={30} color={color}></Ionicons> 
-          ),}} name="Home" component={Home}></Tab.Screen>
+          ), title: "Fil d'actualités"}} name="Home" component={Home}></Tab.Screen>
         <Tab.Screen options={{tabBarIcon: ({ color }) => (
           <Ionicons name="list-outline" size={30} color={color}></Ionicons> 
           ),}} name="Detail" component={Detail} />
