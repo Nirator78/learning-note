@@ -1,10 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import Home from './src/pages/Home';
-import MyNotes from './src/pages/MyNotes';
-import Create from './src/pages/Create';
-import Connexion from './src/pages/Connexion';
+import {Home, MyNotes, Create, Connexion, Detail} from "./src/pages";
 import Ionicons from "@expo/vector-icons/Ionicons"
 
 const Tab = createBottomTabNavigator();

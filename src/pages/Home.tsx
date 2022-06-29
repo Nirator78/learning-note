@@ -3,9 +3,15 @@ import { Text, ScrollView } from "react-native";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
+import StorageService from "../services/StorageService";
 
 export default function Home({navigation} : {navigation: any}) {
     const [noteList, setNoteList] = useState([] as INote[]);
+
+    const setDynamicTitle = async () => {
+        const username = await StorageService.getStorage("username");
+        navigation.setOptions({ title: `Bienvenue ${username}` })
+    };
 
     const getNoteList = async () => {
         const response = await NoteService.getNote();
@@ -14,6 +20,7 @@ export default function Home({navigation} : {navigation: any}) {
 
     useEffect(()=>{
         getNoteList();
+        setDynamicTitle();
     }, []);
 
     return (
