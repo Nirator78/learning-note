@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StorageService from "../services/StorageService";
@@ -9,9 +9,18 @@ export default function Connexion({navigation} : {navigation: any}) {
     const launchTask = async () => {
         if(username){
             StorageService.setStorage("username", username);
-            navigation.navigate("BottomTabNavigation")
+            navigation.navigate("BottomTabNavigation");
         }
     };
+
+    const verifIfUserAlreadyConntected = async () => {
+        if(await StorageService.getStorage("username"))
+            navigation.navigate("BottomTabNavigation");
+    };
+
+    useEffect(()=>{
+        verifIfUserAlreadyConntected();
+    });
 
     return (
         <SafeAreaView>
