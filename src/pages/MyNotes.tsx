@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ScrollView, TextInput } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
@@ -35,13 +35,17 @@ export default function MyNotes() {
 
     return (
         <ScrollView>
-            <TextInput
-                style={{marginTop:'5%', backgroundColor: "#ededed", borderColor: "gray",width: "90%",borderWidth: 1,borderRadius: 10,padding: 10}}
-                onChangeText={(text) => filtreNoteListByTag(text)}
-                value={searchedTag}
-                placeholder="Recherche par tags"
-                autoCapitalize="none"
-            />
+            <View style={{ flexGrow:1, display: 'flex', alignItems:'center', justifyContent:'center', backgroundColor: "white", padding:20, margin:10, borderRadius: 10 }}>
+                <Text style={{fontWeight: "bold", fontSize: 15}}>Rechercher c'est trouver</Text>
+                <TextInput
+                    style={{marginTop:'5%', borderColor: "gray",width: "90%",borderWidth: 0.5,borderRadius: 10,padding: 10}}
+                    onChangeText={(text) => filtreNoteListByTag(text)}
+                    value={searchedTag}
+                    placeholder="Recherche par tags"
+                    autoCapitalize="none"
+                />
+            </View>
+
             {
                 displayNoteList.length ? displayNoteList.map((note:INote, idx:number) =>{
                     return (
