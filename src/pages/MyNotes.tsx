@@ -45,7 +45,7 @@ export default function MyNotes() {
             {
                 displayNoteList.length ? displayNoteList.map((note:INote, idx:number) =>{
                     return (
-                        <Cards key={idx} note={note}/>
+                        <Cards key={idx} note={note} getList={getMyNoteList}/>
                     );
                 }) : null
             }
