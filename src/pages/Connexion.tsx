@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import StorageService from "../services/StorageService";
 
 export default function Connexion({navigation} : {navigation: any}) {
     const [username, setUsername] = useState("");
 
-    const launchTask = async () => {
+    const connect = async () => {
         if(username){
             StorageService.setStorage("username", username);
-            navigation.navigate("BottomTabNavigation")
+            navigation.navigate("BottomTabNavigation");
         }
     };
+
+    const verifIfUserAlreadyConntected = async () => {
+        if(await StorageService.getStorage("username"))
+            navigation.navigate("BottomTabNavigation");
+    };
+
+    useEffect(()=>{
+        verifIfUserAlreadyConntected();
+    });
 
     return (
         <SafeAreaView style={{ flexGrow:1, display: 'flex', alignItems:'center', justifyContent:'center', margin: 20}}>
@@ -27,7 +37,7 @@ export default function Connexion({navigation} : {navigation: any}) {
                 />
                 <TouchableOpacity
                     style={{marginTop:'5%', backgroundColor: "#57A0D2", borderRadius: 10, alignItems: 'center', paddingHorizontal: 32, paddingVertical: 12}}
-                    onPress={launchTask}
+                    onPress={connect}
                 >
                     <Text style={{fontSize: 12}}>Se connecter</Text>
                 </TouchableOpacity>

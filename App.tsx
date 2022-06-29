@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import {Home, MyNotes, Create, Connexion, Detail} from "./src/pages";
+import {Home, MyNotes, Create, Connexion, Detail, Profile} from "./src/pages";
 import Ionicons from "@expo/vector-icons/Ionicons"
 
 const Tab = createBottomTabNavigator();
@@ -19,6 +19,9 @@ function BottomTabNavigation() {
       <Tab.Screen options={{tabBarIcon: ({ color }) => (
         <Ionicons name="list-outline" size={30} color={color}></Ionicons> 
         ),}} name="MyNotes" component={MyNotes} />
+      <Tab.Screen options={{tabBarIcon: ({ color }) => (
+        <Ionicons name="person-circle-outline" size={30} color={color}></Ionicons> 
+        ),}} name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };
