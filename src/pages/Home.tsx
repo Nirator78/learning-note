@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { Text, ScrollView } from "react-native";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
@@ -17,7 +17,7 @@ export default function Home({navigation} : {navigation: any}) {
     }, []);
 
     return (
-        <View>
+        <ScrollView>
             <Text onPress={()=>{navigation.navigate("Detail")}}>Page Home</Text>
             {
                 noteList.length ? noteList.map((note:INote, idx:number) =>{
@@ -26,6 +26,6 @@ export default function Home({navigation} : {navigation: any}) {
                     );
                 }) : null
             }
-        </View>
+        </ScrollView>
     )
 }
