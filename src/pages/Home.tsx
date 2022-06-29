@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
+import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 
@@ -21,10 +22,7 @@ export default function Home({navigation} : {navigation: any}) {
             {
                 noteList.length ? noteList.map((note:INote, idx:number) =>{
                     return (
-                        <View key={idx}>
-                            <Text>{note.title}</Text>
-                            <Text>{note.text}</Text>
-                        </View>
+                        <Cards key={idx} note={note}/>
                     );
                 }) : null
             }
