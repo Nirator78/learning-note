@@ -6,7 +6,7 @@ import StorageService from "../services/StorageService";
 export default function Connexion({navigation} : {navigation: any}) {
     const [username, setUsername] = useState("");
 
-    const launchTask = async () => {
+    const connect = async () => {
         if(username){
             StorageService.setStorage("username", username);
             navigation.navigate("BottomTabNavigation");
@@ -32,7 +32,7 @@ export default function Connexion({navigation} : {navigation: any}) {
             />
             <TouchableOpacity
                 style={{marginTop:'5%', backgroundColor: "#BEAF40", borderRadius: 10, alignItems: 'center', paddingHorizontal: 32, paddingVertical: 12}}
-                onPress={launchTask}
+                onPress={connect}
             >
                 <Text style={{fontSize: 12}}>Se connecter</Text>
             </TouchableOpacity>
