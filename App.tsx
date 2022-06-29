@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import Detail from './src/pages/Detail';
+import Create from './src/pages/Create';
 import Home from './src/pages/Home';
 import Ionicons from "@expo/vector-icons/Ionicons"
 
@@ -15,7 +15,7 @@ export default function App() {
           ),}} name="Home" component={Home}></Tab.Screen>
         <Tab.Screen options={{tabBarIcon: ({ color }) => (
           <Ionicons name="list-outline" size={30} color={color}></Ionicons> 
-          ),}} name="Detail" component={Detail} />
+          ),}} name="Create" component={Create} />
       </Tab.Navigator>
     </NavigationContainer>
   );
