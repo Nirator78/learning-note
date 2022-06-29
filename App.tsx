@@ -14,7 +14,7 @@ function BottomTabNavigation() {
         <Ionicons name="home" size={30} color={color}></Ionicons> 
         ),title:"Fil d'actualités"}} name="Home" component={Home}></Tab.Screen>
       <Tab.Screen options={{tabBarIcon: ({ color }) => (
-        <Ionicons name="list-outline" size={30} color={color}></Ionicons> 
+        <Ionicons name="add-circle-outline" size={30} color={color}></Ionicons> 
         ),}} name="Create" component={Create} />
       <Tab.Screen options={{tabBarIcon: ({ color }) => (
         <Ionicons name="list-outline" size={30} color={color}></Ionicons> 
