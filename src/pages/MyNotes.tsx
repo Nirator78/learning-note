@@ -40,6 +40,7 @@ export default function MyNotes({navigation} : {navigation: any}) {
                 onChangeText={(text) => filtreNoteListByTag(text)}
                 value={searchedTag}
                 placeholder="Recherche par tags"
+                autoCapitalize="none"
             />
             {
                 displayNoteList.length ? displayNoteList.map((note:INote, idx:number) =>{
