@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Detail from './src/pages/Detail';
 import Home from './src/pages/Home';
 import Ionicons from "@expo/vector-icons/Ionicons"
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
