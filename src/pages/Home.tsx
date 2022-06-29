@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
+import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 
 export default function Home({navigation} : {navigation: any}) {
-    const [noteList, setNoteList] = useState([] as any);
+    const [noteList, setNoteList] = useState([] as INote[]);
 
     const getNoteList = async () => {
         const response = await NoteService.getNote();
-        console.log(response)
         setNoteList(response);
     }
 
@@ -19,7 +19,7 @@ export default function Home({navigation} : {navigation: any}) {
         <View>
             <Text onPress={()=>{navigation.navigate("Detail")}}>Page Home</Text>
             {
-                noteList.length ? noteList.map((note:any, idx:number) =>{
+                noteList.length ? noteList.map((note:INote, idx:number) =>{
                     return (
                         <View key={idx}>
                             <Text>{note.title}</Text>
