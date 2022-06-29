@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Text, ScrollView, TextInput, ColorPropType } from "react-native";
+import { ScrollView, TextInput } from "react-native";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 import StorageService from "../services/StorageService";
 
-export default function MyNotes({navigation} : {navigation: any}) {
+export default function MyNotes() {
     const [noteList, setNoteList] = useState([] as INote[]);
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
     const [searchedTag, setSearchedTag] = useState("" as string);
