@@ -6,13 +6,8 @@ import NoteService from "../services/NoteService";
 export default function Detail({navigation, route} : {navigation: any, route: any}) {
     const [note, setNote] = useState({} as INote)
 
-    const getNote = async () => {
-        const response = await NoteService.getOneNote(route.params.id);
-        setNote(response);
-    };
-
     useEffect(() => {
-        getNote();
+        setNote(route.params.note);
     });
 
     return (

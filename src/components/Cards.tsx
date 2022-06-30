@@ -44,7 +44,7 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
 
     const goToDetail = () => {
         console.log("goToDetail");
-        navigation.navigate("Detail", {id: note._id});
+        navigation.navigate("Detail", {note: note});
     };
 
     return (
