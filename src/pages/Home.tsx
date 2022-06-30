@@ -24,7 +24,7 @@ export default function Home() {
     const getNoteList = async () => {
         const response = await NoteService.getNote();
         allNotesContext.setAllNotes(response.reverse());
-        setDisplayNoteList(response.reverse());
+        setDisplayNoteList(response);
     };
 
     const filtreNoteListByTag = async (text: string) => {
