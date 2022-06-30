@@ -6,6 +6,7 @@ import { getDateFormated } from "../utils/ConverteDate";
 import NoteService from "../services/NoteService";
 import { useNavigation } from '@react-navigation/native';
 import StorageService from "../services/StorageService";
+import BasicButton from "./Button";
 
 export default function Cards({note, getList} : {note: INote, getList: Function}) {
     const [date, setDate] = useState(note.creation_date as any);
@@ -48,11 +49,13 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
     };
 
     return (
-        <View style={{backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10}}>           
+        <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10}}>           
             {
                 username === note.author ? (
-                <View style={{justifyContent: "flex-end", alignItems: "flex-end"}}>
-                    <Ionicons onPress={() => createTwoButtonAlert(note._id)} size={15} name="close-outline"></Ionicons>
+                <View style={{justifyContent: "flex-end", alignItems: "flex-end",}}>
+                    <BasicButton onPress={() => createTwoButtonAlert(note._id)}>
+                        <Ionicons style={{ marginEnd:-20 }} size={20} name="close-outline"></Ionicons>
+                    </BasicButton>
                 </View> 
                 ) : null 
             }
@@ -79,18 +82,14 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
                     </View>
                 </View>
             </View>
-            {
-                username === note.author ? (
-                    <View style={{justifyContent: "flex-end", alignItems: "flex-end"}}>
-                        <TouchableOpacity
-                            style={{marginTop:'5%', backgroundColor: "#57A0D2", borderRadius: 10, alignItems: 'center', paddingHorizontal: 32, paddingVertical: 12}}
-                            onPress={goToDetail}
-                        >
-                            <Ionicons size={20} name="chevron-forward-outline"></Ionicons>
-                        </TouchableOpacity>
-                    </View>  
-                ) : null
-            }            
+            <View style={{justifyContent: "flex-end", alignItems: "flex-end"}}>
+                <BasicButton
+                    style={{borderRadius: 10, alignItems: 'center', paddingHorizontal: 32}}
+                    onPress={goToDetail}
+                >
+                    <Ionicons size={20} style={{marginEnd:-20}} name="chevron-forward-outline"></Ionicons>
+                </BasicButton>
+            </View>         
         </View>
     )
 }
