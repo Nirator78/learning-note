@@ -6,5 +6,6 @@ export default interface INote {
     anonym: boolean;
     tags: string[];
     creation_date: Date;
+    image?: string;
     __v: number;
 };
