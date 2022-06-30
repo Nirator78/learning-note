@@ -18,7 +18,7 @@ export default function MyNotes() {
         const username = await StorageService.getStorage("username");
         const response = await NoteService.getNote();
         allNotesContext.setAllNotes(response.reverse());
-        const listFiltered = response.reverse().filter(note => note.author === username);
+        const listFiltered = response.filter(note => note.author === username);
         setUserNotesList(listFiltered);
         setDisplayNoteList(listFiltered);
     };
