@@ -54,36 +54,45 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
     };
 
     return (
-        <View>
-            <TextInput
-                style={{marginTop:'5%', justifyContent: "center", borderColor: "gray",width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
-                onChangeText={setTitle}
-                value={note.title}
-                placeholder={"title"}
-            />
-            <TextInput
-                style={{marginTop:'5%', justifyContent: "center", borderColor: "gray",width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
-                onChangeText={setText}
-                value={note.text}
-                placeholder={"text"}
-            />
-            <TextInput
-                style={{marginTop:'5%', justifyContent: "center", borderColor: "gray",width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
-                onChangeText={setImage}
-                value={note.image}
-                placeholder={"image"}
-            />
-            <View style={style.textBox}>
-                <TagInput
-                    updateState={setTags}
-                    tags={tags}
-                    placeholder="Tags de ta note"
+        <View style={{ display: 'flex', backgroundColor: "white", padding:30, margin: 20, borderRadius: 10 }} >
+            <View style={{ flexGrow:1, display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent:'center'}}>
+                {
+                    note._id ?
+                    <Text style={{fontSize: 17}}> Modification de votre note </Text>
+                    :
+                    <Text style={{fontSize: 17}}> Création de votre note </Text>
+                }
+                <TextInput
+                    style={{marginTop:'5%', justifyContent: "center", borderColor: "gray",width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
+                    onChangeText={setTitle}
+                    value={note.title}
+                    placeholder={"Titre"}
                 />
+                <TextInput
+                    style={{marginTop:'5%', justifyContent: "center", borderColor: "gray",width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
+                    onChangeText={setText}
+                    value={note.text}
+                    placeholder={"Le texte"}
+                />
+                <TextInput
+                    style={{marginTop:'5%', justifyContent: "center", borderColor: "gray",width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
+                    onChangeText={setImage}
+                    value={note.image}
+                    placeholder={"Image"}
+                />
+                <View style={style.textBox}>
+                    <TagInput
+                        updateState={setTags}
+                        tags={tags}
+                        placeholder="Tags de ta note"
+                    />
+                </View>
             </View>
-            <View>
+            <View style={{flexGrow:1, display: 'flex', flexDirection: 'row', alignItems:'flex-start', justifyContent:'flex-start', padding:10}}>
                 <CheckBox
                     value={note.anonym}
-                    onValueChange={setAnonym}
+                    onValueChange={setAnonym}   
+                    style={{marginRight: 10}}
                 />
                 <Text>Anonyme</Text>
             </View>
@@ -91,7 +100,12 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
                 style={{marginTop:'5%', backgroundColor: "#57A0D2", borderRadius: 10, alignItems: 'center', paddingHorizontal: 32, paddingVertical: 12}}
                 onPress={onSubmit}
             >
-                <Text style={{fontSize: 12}}>Créer</Text>
+                {
+                    note._id ?
+                        <Text style={{fontSize: 12}}>Modifier</Text>
+                    :
+                        <Text style={{fontSize: 12}}>Créer</Text>
+                }
             </TouchableOpacity>
         </View>
     );
