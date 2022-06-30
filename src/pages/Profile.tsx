@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BasicButton from "../components/Button";
 import StorageService from "../services/StorageService";
 
 export default function Profile({navigation} : {navigation: any}) {
@@ -26,12 +27,12 @@ export default function Profile({navigation} : {navigation: any}) {
                 style={{width: 60, height: 60, margin:5, borderRadius: 40}}
             />
             <Text>{username}</Text>
-            <TouchableOpacity
-                style={{marginTop:'5%', backgroundColor: "#BEAF40", borderRadius: 10, alignItems: 'center', paddingHorizontal: 32, paddingVertical: 12}}
+            <BasicButton
+                style={{marginTop:'5%', backgroundColor: "#57A0D2", borderRadius: 10, alignItems: 'center', paddingHorizontal: 32, paddingVertical: 12}}
                 onPress={deconnect}
             >
             <Text style={{fontSize: 12}}>Se déconnecter</Text>
-            </TouchableOpacity>
+            </BasicButton>
         </View>
     )
 }
