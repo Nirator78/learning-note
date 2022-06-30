@@ -80,11 +80,14 @@ export default function Home() {
                     );
                 }) : null
             }
-            <View style={{alignItems:'center', justifyContent:'center'}}>
-            <BasicButton style={{backgroundColor: "#57A0D2", padding: 10, margin: 10 }} onPress={() => voirPlus()}>
-               <Text>Voir plus</Text>
-            </BasicButton> 
-            </View>
+            {
+                displayNoteList.length >= nombre && 
+                <View style={{alignItems:'center', justifyContent:'center'}}>
+                    <BasicButton style={{backgroundColor: "#57A0D2", padding: 10, margin: 10 }} onPress={() => voirPlus()}>
+                        <Text>Voir plus</Text>
+                    </BasicButton> 
+                </View>
+            }
 
         </ScrollView>
     )
