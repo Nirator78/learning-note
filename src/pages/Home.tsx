@@ -34,7 +34,7 @@ export default function Home() {
             setDisplayNoteList(allNotesContext.allNotes);
         }else{
             const filterList = (note: INote) => {
-                return note.tags.some(tag => tag.toLowerCase() === text.toLowerCase()) || note.author?.toLowerCase() === text.toLowerCase();
+                return note.tags.some(tag => tag.toLowerCase().includes(text.toLowerCase())) || note.author?.toLowerCase().includes(text.toLowerCase());
             }; 
 
             const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
