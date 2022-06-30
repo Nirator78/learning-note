@@ -7,15 +7,11 @@ import StorageService from "../services/StorageService";
 import NoteService from "../services/NoteService";
 
 export default function Forulaire({navigation, route} : {navigation: any, route: any}) {
-    const [note, setNote] = useState(route?.params?.note || {} as INote);
+    const [note, setNote] = useState(route?.params?.note || {anonym: false} as INote);
     const [tags, setTags] = useState({
         tag: "",
         tagsArray: note.tags || []
-      })  
-
-    const updateTagState = (update: any) => {
-        setTags(update);
-    };
+    });
 
     const setTitle = (title: string) => {
         setNote({...note, title});
@@ -34,7 +30,7 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
     };
     
     const onSubmit = async () => {
-        // const noteToSend: INote = {...data, };
+        // Si anonym à true on vire l'utilisateur courant de l'envoie
         const username = await StorageService.getStorage("username");
         note.author = username;
         if(note.anonym){
@@ -79,7 +75,7 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
             />
             <View style={style.textBox}>
                 <TagInput
-                    updateState={updateTagState}
+                    updateState={setTags}
                     tags={tags}
                     placeholder="Tags de ta note"
                 />
