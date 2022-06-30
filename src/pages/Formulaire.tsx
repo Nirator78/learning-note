@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Text, View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import CheckBox from "expo-checkbox";
 import INote from "../interfaces/NoteInterface";
 import TagInput from "react-native-tags-input";
-import StorageService from "../services/StorageService";
 import NoteService from "../services/NoteService";
+import { LoginContext } from "../utils/Context";
 
 export default function Forulaire({navigation, route} : {navigation: any, route: any}) {
+    const loginContext = useContext(LoginContext);
     const [note, setNote] = useState(route?.params?.note || {anonym: false} as INote);
     const [tags, setTags] = useState({
         tag: "",
@@ -31,8 +32,7 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
     
     const onSubmit = async () => {
         // Si anonym à true on vire l'utilisateur courant de l'envoie
-        const username = await StorageService.getStorage("username");
-        note.author = username;
+        note.author = loginContext.username;
         if(note.anonym){
             delete note.author;
         }
@@ -41,10 +41,8 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
         note.tags = tags.tagsArray;
 
         if(note._id) {
-            console.log("modif", note);
             await NoteService.updateNote(note._id, note)
         }else{
-            console.log("creation", note);
             await NoteService.createNote(note)
         }
         // clean le formulaire

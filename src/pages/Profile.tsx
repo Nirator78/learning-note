@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
 import BasicButton from "../components/Button";
 import StorageService from "../services/StorageService";
+import { LoginContext } from "../utils/Context";
 
 export default function Profile({navigation} : {navigation: any}) {
+    const loginContext = useContext(LoginContext);
     const [username, setUserName] = useState("");
 
     const deconnect = async () => {
         StorageService.removeStorage("username");
         navigation.navigate("Connexion");
     };
-    const getUser = async () => {
-        const username = await StorageService.getStorage("username");
-        setUserName(username);
-    };
-
+    
     useEffect(()=>{
-        getUser();
+        setUserName(loginContext.username);
     }, []);
 
     return (

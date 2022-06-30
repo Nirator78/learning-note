@@ -4,22 +4,17 @@ import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
-import StorageService from "../services/StorageService";
-import { NotesContext } from "../utils/Context";
+import { LoginContext, NotesContext } from "../utils/Context";
 
 export default function Home() {
     const allNotesContext = useContext(NotesContext);
+    const loginContext = useContext(LoginContext);
     
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
-    const [username, setUserName] = useState("");
+    const [username, setUserName] = useState(loginContext.username);
     const [searchedTag, setSearchedTag] = useState("" as string);
     const [refreshing, setRefreshing] = useState(false);
     const [nombre, setNombre] = useState(5 as number);
-
-    const setDynamicTitle = async () => {
-        const username = await StorageService.getStorage("username");
-        setUserName(username);
-    };
 
     const getNoteList = async () => {
         const response = await NoteService.getNote();
@@ -44,7 +39,6 @@ export default function Home() {
 
     useEffect(()=>{
         getNoteList();
-        setDynamicTitle();
     }, []);
 
     const onRefresh = useCallback(async () => {

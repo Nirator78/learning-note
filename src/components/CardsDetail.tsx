@@ -1,30 +1,25 @@
 import { Alert, Image, Text, View } from "react-native";
 import INote from "../interfaces/NoteInterface";
 import Ionicons from "@expo/vector-icons/Ionicons"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getDateFormated } from "../utils/ConverteDate";
 import NoteService from "../services/NoteService";
 import { useNavigation } from '@react-navigation/native';
-import StorageService from "../services/StorageService";
 import BasicButton from "./Button";
+import { LoginContext } from "../utils/Context";
 
 export default function CardsDetails({note} : {note: INote}) {
+    const loginContext = useContext(LoginContext);
     const [date, setDate] = useState(note.creation_date as any);
-    const [username, setUsername] = useState("" as string);
+    const [username, setUsername] = useState(loginContext.username as string);
     const [noteInfo, setNoteInfo] = useState({} as INote);
 
     const navigation = useNavigation();
-
-    const getUsername = async () => {
-        const user = await StorageService.getStorage("username");
-        setUsername(user);
-    }
 
     useEffect(() => {
         setNoteInfo(note);
         const date = getDateFormated(note.creation_date);
         setDate(date);
-        getUsername();
     }, [note]);
 
     const createTwoButtonAlert = (id : string) =>

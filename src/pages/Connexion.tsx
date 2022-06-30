@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StorageService from "../services/StorageService";
+import { LoginContext } from "../utils/Context";
 
 export default function Connexion({navigation} : {navigation: any}) {
     const [username, setUsername] = useState("");
+    const loginContext = useContext(LoginContext);
 
     const connect = async () => {
         if(username){
             StorageService.setStorage("username", username);
+            loginContext.setUsername(username);
             navigation.navigate("BottomTabNavigation");
         }
     };
 
     const verifIfUserAlreadyConntected = async () => {
-        if(await StorageService.getStorage("username"))
+        if(loginContext.username)
             navigation.navigate("BottomTabNavigation");
     };
 

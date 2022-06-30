@@ -3,11 +3,11 @@ import { RefreshControl, ScrollView, Text, TextInput, View } from "react-native"
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
-import StorageService from "../services/StorageService";
-import { NotesContext } from "../utils/Context";
+import { LoginContext, NotesContext } from "../utils/Context";
 
 export default function MyNotes() {
     const allNotesContext = useContext(NotesContext);
+    const loginContext = useContext(LoginContext);
 
     const [userNotesList, setUserNotesList] = useState([] as INote[]);
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
@@ -15,10 +15,9 @@ export default function MyNotes() {
     const [refreshing, setRefreshing] = useState(false);
 
     const getMyNoteList = async () => {
-        const username = await StorageService.getStorage("username");
         const response = await NoteService.getNote();
         allNotesContext.setAllNotes(response.reverse());
-        const listFiltered = response.filter(note => note.author === username);
+        const listFiltered = response.filter(note => note.author === loginContext.username);
         setUserNotesList(listFiltered);
         setDisplayNoteList(listFiltered);
     };
