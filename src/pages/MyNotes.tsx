@@ -24,7 +24,11 @@ export default function MyNotes() {
         if(!text){
             setDisplayNoteList(noteList);
         }else{ 
-            const listFilteredByTag = noteList.filter(note => note.tags.includes(text));
+            const filterList = (note: INote) => {
+                return note.tags.some(tag => tag.toLowerCase() === text.toLowerCase()) || note.author?.toLowerCase() === text.toLowerCase();
+            }; 
+
+            const listFilteredByTag = noteList.filter(filterList);
             setDisplayNoteList(listFilteredByTag);
         }
     };

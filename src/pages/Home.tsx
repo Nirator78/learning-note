@@ -27,8 +27,12 @@ export default function Home() {
         // Si le texte est vide on remet la liste entière
         if(!text){
             setDisplayNoteList(noteList);
-        }else{ 
-            const listFilteredByTag = noteList.filter(note => note.tags.includes(text));
+        }else{
+            const filterList = (note: INote) => {
+                return note.tags.some(tag => tag.toLowerCase() === text.toLowerCase()) || note.author?.toLowerCase() === text.toLowerCase();
+            }; 
+
+            const listFilteredByTag = noteList.filter(filterList);
             setDisplayNoteList(listFilteredByTag);
         }
     };
