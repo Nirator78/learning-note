@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import CardsDetails from "../components/CardsDetail";
 import INote from "../interfaces/NoteInterface";
 

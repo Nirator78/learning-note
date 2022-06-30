@@ -84,7 +84,7 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
                     
                         <Text>{note.text}</Text>
                     </View>
-                    <View style={{flexDirection: 'row' }}>
+                    <View style={{flexDirection: 'row', flexWrap: "wrap" }}>
                         {
                             note.tags.length ? note.tags.map((tags, idx:number) =>{
                                 return (
