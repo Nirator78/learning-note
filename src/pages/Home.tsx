@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Text, ScrollView, View, TextInput, RefreshControl } from "react-native";
 import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
