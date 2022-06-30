@@ -1,4 +1,4 @@
-import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Text, View } from "react-native";
 import INote from "../interfaces/NoteInterface";
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { useEffect, useState } from "react";
