@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { RefreshControl, ScrollView, Text, TextInput, View } from "react-native";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
@@ -8,14 +8,15 @@ import StorageService from "../services/StorageService";
 export default function MyNotes() {
     const [noteList, setNoteList] = useState([] as INote[]);
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
-    const [searchedTag, setSearchedTag] = useState("" as string);
+    const [searchedTag, setSearchedTag] = useState("" as string);    
+    const [refreshing, setRefreshing] = useState(false);
 
     const getMyNoteList = async () => {
         const response = await NoteService.getNote();
         const username = await StorageService.getStorage("username");
         const listFiltered = response.filter(note => note.author === username);
-        setNoteList(listFiltered);
-        setDisplayNoteList(listFiltered);
+        setNoteList(listFiltered.reverse());
+        setDisplayNoteList(listFiltered.reverse());
     };
 
     const filtreNoteListByTag = async (text: string) => {
@@ -37,8 +38,14 @@ export default function MyNotes() {
         getMyNoteList();
     }, []);
 
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        await getMyNoteList()
+        setRefreshing(false);
+      }, []);
+
     return (
-        <ScrollView>
+        <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <View style={{ flexGrow:1, display: 'flex', alignItems:'center', justifyContent:'center', backgroundColor: "white", padding:20, margin:10, borderRadius: 10 }}>
                 <Text style={{fontWeight: "bold", fontSize: 15}}>Rechercher c'est trouver</Text>
                 <TextInput

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Text, ScrollView, View, TextInput } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { Text, ScrollView, View, TextInput, RefreshControl } from "react-native";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
@@ -10,6 +10,7 @@ export default function Home() {
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
     const [username, setUserName] = useState("");
     const [searchedTag, setSearchedTag] = useState("" as string);
+    const [refreshing, setRefreshing] = useState(false);
 
     const setDynamicTitle = async () => {
         const username = await StorageService.getStorage("username");
@@ -18,7 +19,7 @@ export default function Home() {
 
     const getNoteList = async () => {
         const response = await NoteService.getNote();
-        setNoteList(response);
+        setNoteList(response.reverse());
         setDisplayNoteList(response);
     };
 
@@ -42,8 +43,14 @@ export default function Home() {
         setDynamicTitle();
     }, []);
 
+    const onRefresh = useCallback(async () => {
+      setRefreshing(true);
+      await getNoteList()
+      setRefreshing(false);
+    }, []);
+
     return (
-        <ScrollView>
+        <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> }>
             <View style={{justifyContent: "center", alignItems: "center", backgroundColor: "white", padding: 20, margin: 10}}>
                 <Text style={{fontSize: 17}}> Bienvenue </Text>
                 <Text style={{fontWeight: "bold"}}>{username}</Text>
