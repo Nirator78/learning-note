@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
+import CardsDetails from "../components/CardsDetail";
 import INote from "../interfaces/NoteInterface";
 
 export default function Detail({navigation, route} : {navigation: any, route: any}) {
@@ -12,7 +13,7 @@ export default function Detail({navigation, route} : {navigation: any, route: an
 
     return (
         <View>
-            <Text onPress={()=>{navigation.navigate("Formulaire", {note})}}>Page Formulaire</Text>
+            <CardsDetails note={note}/> 
         </View>
     )
 }

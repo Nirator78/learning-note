@@ -8,9 +8,11 @@ import { useNavigation } from '@react-navigation/native';
 import StorageService from "../services/StorageService";
 import BasicButton from "./Button";
 
-export default function Cards({note, getList} : {note: INote, getList: Function}) {
+export default function CardsDetails({note} : {note: INote}) {
     const [date, setDate] = useState(note.creation_date as any);
     const [username, setUsername] = useState("" as string);
+    const [noteInfo, setNoteInfo] = useState({} as INote);
+
     const navigation = useNavigation();
 
     const getUsername = async () => {
@@ -19,10 +21,11 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
     }
 
     useEffect(() => {
-       const date = getDateFormated(note.creation_date);
-       setDate(date);
-       getUsername();
-    }, []);
+        setNoteInfo(note);
+        const date = getDateFormated(note.creation_date);
+        setDate(date);
+        getUsername();
+    }, [note]);
 
     const createTwoButtonAlert = (id : string) =>
     Alert.alert(
@@ -40,26 +43,12 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
 
     const deleteNote = async (id : string) => {
         await NoteService.deleteNote(id);
-        getList();
-    };
-
-    const goToDetail = () => {
-        navigation.navigate("Detail", {note: note});
+        navigation.navigate("Home");
     };
 
     return (
         <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10, maxHeight: "100%", maxWidth: "100%" }}>           
-            {
-                username === note.author ? (
-                <View style={{justifyContent: "flex-end", alignItems: "flex-end",}}>
-                    <BasicButton onPress={() => createTwoButtonAlert(note._id)}>
-                        <Ionicons style={{ marginEnd:-20 }} size={20} name="close-outline"></Ionicons>
-                    </BasicButton>
-                </View> 
-                ) : null 
-            }
-            <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>{date}</Text>
-            <View style={{flexDirection: 'row', maxWidth: 270 }}> 
+            <View style={{justifyContent: "center", alignItems: "center"}}> 
                 {
                     note.image ?  
                     <Image
@@ -72,21 +61,24 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
                         style={{width: 60, height: 60, margin:5, borderRadius: 40}}
                     />
                 }
+            </View>  
                 <View style={{padding:10, borderRadius: 10}}>
-                    <View>
-                        <Text style={{ fontWeight: "bold", fontSize: 15}}>{note.title}</Text>
+                    <View style={{justifyContent: "center", alignItems: "center", paddingBottom:10}}>
+                        <Text style={{ fontWeight: "bold", fontSize: 25}}>{note.title}</Text>
+                    </View>
+                    <View style={{paddingBottom:10}}>
+                        <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>{date}</Text>
                         {
                             note.author ?
                             <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>Auteur : {note.author}</Text>
                             : 
                             <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>Auteur : Inconnu</Text>
                         }
-                    
-                        <Text>{note.text}</Text>
                     </View>
+                    <Text>{note.text}</Text>
                     <View style={{flexDirection: 'row' }}>
                         {
-                            note.tags.length ? note.tags.map((tags, idx:number) =>{
+                            note.tags?.length ? note.tags.map((tags, idx:number) =>{
                                 return (
                                     <View key={idx}  style={{marginTop:10, marginRight:5, backgroundColor:"#CC8823", borderRadius:20}}>
                                         <Text style={{ margin:4}} >{tags}</Text>    
@@ -95,16 +87,16 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
                             }) : null
                         }
                     </View>
-                </View>
-            </View>
-            <View style={{justifyContent: "flex-end", alignItems: "flex-end"}}>
-                <BasicButton
-                    style={{borderRadius: 10, alignItems: 'center', paddingHorizontal: 32}}
-                    onPress={goToDetail}
-                >
-                    <Ionicons size={20} style={{marginEnd:-20}} name="chevron-forward-outline"></Ionicons>
-                </BasicButton>
-            </View>         
+                </View>     
+                {
+                username === note.author ? (
+                    <View style={{justifyContent: "center", alignItems: "center", paddingTop: 20}}>
+                        <BasicButton style={{ backgroundColor: "#FF3C4C", padding: 10 }} onPress={() => createTwoButtonAlert(note._id)}>
+                            <Text>Supprimer</Text>
+                        </BasicButton>
+                    </View> 
+                ) : null 
+                } 
         </View>
     )
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, Image } from "react-native";
 import BasicButton from "../components/Button";
 import StorageService from "../services/StorageService";
 

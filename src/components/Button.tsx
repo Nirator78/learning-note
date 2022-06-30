@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TextStyle, TouchableOpacity} from "react-native";
+import { TextStyle, TouchableOpacity } from "react-native";
 
 export default function BasicButton({ 
     children, 
