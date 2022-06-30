@@ -12,7 +12,6 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
     const [username, setUsername] = useState("" as string);
     const navigation = useNavigation();
 
-
     const getUsername = async () => {
         const user = await StorageService.getStorage("username");
         setUsername(user);

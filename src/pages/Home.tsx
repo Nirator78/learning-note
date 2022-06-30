@@ -20,7 +20,7 @@ export default function Home() {
         const response = await NoteService.getNote();
         setNoteList(response);
         setDisplayNoteList(response);
-    }
+    };
 
     const filtreNoteListByTag = async (text: string) => {
         setSearchedTag(text);
