@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import {Home, MyNotes, Create, Connexion, Detail, Profile} from "./src/pages";
+import { Home, MyNotes, Create, Connexion, Detail, Profile, Formulaire } from "./src/pages";
 import Ionicons from "@expo/vector-icons/Ionicons"
 
 const Tab = createBottomTabNavigator();
@@ -33,6 +33,7 @@ export default function App() {
         <Stack.Screen name='Connexion' component={Connexion}></Stack.Screen>
         <Stack.Group screenOptions={{ headerShown: true, presentation: 'modal' }}>
           <Stack.Screen name="Detail" component={Detail} />
+          <Stack.Screen name="Formulaire" component={Formulaire} />
         </Stack.Group>
         <Stack.Screen name='BottomTabNavigation' component={BottomTabNavigation}></Stack.Screen>
       </Stack.Navigator>

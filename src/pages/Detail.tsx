@@ -12,7 +12,7 @@ export default function Detail({navigation, route} : {navigation: any, route: an
 
     return (
         <View>
-            <Text onPress={()=>{navigation.navigate("Home")}}>Page Detail</Text>
+            <Text onPress={()=>{navigation.navigate("Formulaire", {note})}}>Page Formulaire</Text>
         </View>
     )
 }
