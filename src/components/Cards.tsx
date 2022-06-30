@@ -48,7 +48,7 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
     };
 
     return (
-        <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10, maxHeight: "100%", maxWidth: "100%" }}>           
+        <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10 }}>           
             {
                 username === note.author ? (
                 <View style={{justifyContent: "flex-end", alignItems: "flex-end",}}>

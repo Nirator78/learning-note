@@ -46,8 +46,21 @@ export default function CardsDetails({note} : {note: INote}) {
         navigation.navigate("Home");
     };
 
+    const goToModification = () => {
+        navigation.navigate("Formulaire", {note: note});
+    };
+
     return (
-        <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10, maxHeight: "100%", maxWidth: "100%" }}>           
+        <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10}}>           
+            {
+                username === note.author ? (
+                <View style={{justifyContent: "flex-end", alignItems: "flex-end",}}>
+                    <BasicButton onPress={() => goToModification()}>
+                        <Ionicons style={{ marginEnd:-20 }} size={20} name="create-outline"></Ionicons>
+                    </BasicButton>
+                </View> 
+                ) : null 
+            }            
             <View style={{justifyContent: "center", alignItems: "center"}}> 
                 {
                     note.image ?  
