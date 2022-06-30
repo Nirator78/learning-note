@@ -8,12 +8,7 @@ class NoteService {
         const response = await api.get("/note");
         return await response.data;
     }
-
-    async getOneNote(id: string): Promise<INote> {
-        const response = await api.get(`/note/${id}`);
-        return await response.data;
-    }
-
+    
     async createNote(payload: INote): Promise<INote[]> {
         const response = await api.post("/note", payload);
         return await response.data;
