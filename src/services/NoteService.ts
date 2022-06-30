@@ -9,7 +9,7 @@ class NoteService {
         return await response.data;
     }
 
-    async getOneNote(id: string): Promise<INote[]> {
+    async getOneNote(id: string): Promise<INote> {
         const response = await api.get(`/note/${id}`);
         return await response.data;
     }
