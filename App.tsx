@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Home, MyNotes, Create, Connexion, Detail, Profile, Formulaire } from "./src/pages";
+import { Home, MyNotes, Connexion, Detail, Profile, Formulaire } from "./src/pages";
 import Ionicons from "@expo/vector-icons/Ionicons"
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +15,7 @@ function BottomTabNavigation() {
         ),title:"Fil d'actualités"}} name="Home" component={Home}></Tab.Screen>
       <Tab.Screen options={{tabBarIcon: ({ color }) => (
         <Ionicons name="add-circle-outline" size={30} color={color}></Ionicons> 
-        ),}} name="Create" component={Create} />
+        ),}} name="Create" component={Formulaire} />
       <Tab.Screen options={{tabBarIcon: ({ color }) => (
         <Ionicons name="list-outline" size={30} color={color}></Ionicons> 
         ),}} name="MyNotes" component={MyNotes} />
