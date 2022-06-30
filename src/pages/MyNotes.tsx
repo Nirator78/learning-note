@@ -1,35 +1,36 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, Text, TextInput, View } from "react-native";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
-import NoteService from "../services/NoteService";
 import StorageService from "../services/StorageService";
+import { NotesContext } from "../utils/Context";
 
 export default function MyNotes() {
-    const [noteList, setNoteList] = useState([] as INote[]);
+    const allNotesContext = useContext(NotesContext);
+
+    const [userNotesList, setUserNotesList] = useState([] as INote[]);
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
     const [searchedTag, setSearchedTag] = useState("" as string);    
     const [refreshing, setRefreshing] = useState(false);
 
     const getMyNoteList = async () => {
-        const response = await NoteService.getNote();
         const username = await StorageService.getStorage("username");
-        const listFiltered = response.filter(note => note.author === username);
-        setNoteList(listFiltered.reverse());
-        setDisplayNoteList(listFiltered.reverse());
+        const listFiltered = allNotesContext.allNotes.filter(note => note.author === username);
+        setUserNotesList(listFiltered);
+        setDisplayNoteList(listFiltered);
     };
 
     const filtreNoteListByTag = async (text: string) => {
         setSearchedTag(text);
         // Si le texte est vide on remet la liste entière
         if(!text){
-            setDisplayNoteList(noteList);
+            setDisplayNoteList(userNotesList);
         }else{ 
             const filterList = (note: INote) => {
                 return note.tags.some(tag => tag.toLowerCase() === text.toLowerCase()) || note.author?.toLowerCase() === text.toLowerCase();
             }; 
 
-            const listFilteredByTag = noteList.filter(filterList);
+            const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
             setDisplayNoteList(listFilteredByTag);
         }
     };
@@ -42,7 +43,7 @@ export default function MyNotes() {
         setRefreshing(true);
         await getMyNoteList()
         setRefreshing(false);
-      }, []);
+    }, []);
 
     return (
         <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>

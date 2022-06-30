@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext} from "react";
 import { Text, ScrollView, View, TextInput, RefreshControl } from "react-native";
 import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 import StorageService from "../services/StorageService";
+import { NotesContext } from "../utils/Context";
 
 export default function Home() {
-    const [noteList, setNoteList] = useState([] as INote[]);
+    const allNotesContext = useContext(NotesContext);
+    
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
     const [username, setUserName] = useState("");
     const [searchedTag, setSearchedTag] = useState("" as string);
@@ -21,21 +23,21 @@ export default function Home() {
 
     const getNoteList = async () => {
         const response = await NoteService.getNote();
-        setNoteList(response.reverse());
-        setDisplayNoteList(response);
+        allNotesContext.setAllNotes(response.reverse());
+        setDisplayNoteList(response.reverse());
     };
 
     const filtreNoteListByTag = async (text: string) => {
         setSearchedTag(text);
         // Si le texte est vide on remet la liste entière
         if(!text){
-            setDisplayNoteList(noteList);
+            setDisplayNoteList(allNotesContext.allNotes);
         }else{
             const filterList = (note: INote) => {
                 return note.tags.some(tag => tag.toLowerCase() === text.toLowerCase()) || note.author?.toLowerCase() === text.toLowerCase();
             }; 
 
-            const listFilteredByTag = noteList.filter(filterList);
+            const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
             setDisplayNoteList(listFilteredByTag);
         }
     };
@@ -72,7 +74,7 @@ export default function Home() {
                 />
             </View>
             {
-                displayNoteList.length ? displayNoteList.slice(0,nombre).map((note:INote, idx:number) =>{
+                displayNoteList.length ? displayNoteList.slice(0, nombre).map((note:INote, idx:number) =>{
                     return (
                         <Cards key={idx} note={note} getList={getNoteList}/>
                     );
