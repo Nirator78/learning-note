@@ -7,7 +7,6 @@ export default function Detail({navigation, route} : {navigation: any, route: an
     const [note, setNote] = useState({} as INote)
 
     useEffect(() => {
-        console.log(route.params.note)
         setNote(route.params.note);
     }, []);
 
