@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Home, MyNotes, Connexion, Detail, Profile, Formulaire } from "./src/pages";
 import Ionicons from "@expo/vector-icons/Ionicons"
+import "./ignoreWarning";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
