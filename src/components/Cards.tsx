@@ -49,7 +49,7 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
     };
 
     return (
-        <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10}}>           
+        <View style={{ backgroundColor: "white", marginHorizontal: 20, marginVertical: 5, padding:10, borderRadius: 10, maxHeight: "100%", maxWidth: "100%" }}>           
             {
                 username === note.author ? (
                 <View style={{justifyContent: "flex-end", alignItems: "flex-end",}}>
@@ -60,16 +60,32 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
                 ) : null 
             }
             <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>{date}</Text>
-            <View style={{flexDirection: 'row'}}>
-                <Image
-                    source={{uri: 'http://via.placeholder.com/60x60'}}
-                    style={{width: 60, height: 60, margin:5, borderRadius: 40}}
-                />
+            <View style={{flexDirection: 'row', maxWidth: 270 }}> 
+                {
+                    note.image ?  
+                    <Image
+                        source={{uri: note.image }}
+                        style={{width: 60, height: 60, margin:5, borderRadius: 40}}
+                    />  
+                    :           
+                    <Image
+                        source={{uri: 'http://via.placeholder.com/60x60'}}
+                        style={{width: 60, height: 60, margin:5, borderRadius: 40}}
+                    />
+                }
                 <View style={{padding:10, borderRadius: 10}}>
-                    <Text style={{ fontWeight: "bold", fontSize: 15}}>{note.title}</Text>
-                    <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>{note.author}</Text>
-                    <Text>{note.text}</Text>
-                    <View style={{flexDirection: 'row'}}>
+                    <View>
+                        <Text style={{ fontWeight: "bold", fontSize: 15}}>{note.title}</Text>
+                        {
+                            note.author ?
+                            <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>Auteur : {note.author}</Text>
+                            : 
+                            <Text style={{ fontWeight: "bold", fontSize: 12, fontStyle: "italic", paddingBottom: 5}}>Auteur : Inconnu</Text>
+                        }
+                    
+                        <Text>{note.text}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row' }}>
                         {
                             note.tags.length ? note.tags.map((tags, idx:number) =>{
                                 return (
