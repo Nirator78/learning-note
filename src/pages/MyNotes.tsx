@@ -1,5 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, Text, TextInput, View } from "react-native";
+import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
@@ -8,11 +9,12 @@ import { LoginContext, NotesContext } from "../utils/Context";
 export default function MyNotes() {
     const allNotesContext = useContext(NotesContext);
     const loginContext = useContext(LoginContext);
-
+    
     const [userNotesList, setUserNotesList] = useState([] as INote[]);
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
     const [searchedTag, setSearchedTag] = useState("" as string);    
     const [refreshing, setRefreshing] = useState(false);
+    const [nombre, setNombre] = useState(5 as number);
 
     const getMyNoteList = async () => {
         const response = await NoteService.getNote();
@@ -47,6 +49,10 @@ export default function MyNotes() {
         setRefreshing(false);
     }, []);
 
+    const voirPlus = ()=>{
+        setNombre(nombre+5);
+    }
+
     return (
         <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <View style={{ flexGrow:1, display: 'flex', alignItems:'center', justifyContent:'center', backgroundColor: "white", padding:20, margin:10, borderRadius: 10 }}>
@@ -61,11 +67,19 @@ export default function MyNotes() {
             </View>
 
             {
-                displayNoteList.length ? displayNoteList.map((note:INote, idx:number) =>{
+                displayNoteList.length ? displayNoteList.slice(0, nombre).map((note:INote, idx:number) =>{
                     return (
                         <Cards key={idx} note={note} getList={getMyNoteList} />
                     );
                 }) : null
+            }
+            {
+                displayNoteList.length >= nombre && 
+                <View style={{alignItems:'center', justifyContent:'center'}}>
+                    <BasicButton style={{backgroundColor: "#57A0D2", padding: 10, margin: 10 }} onPress={() => voirPlus()}>
+                        <Text>Voir plus</Text>
+                    </BasicButton> 
+                </View>
             }
         </ScrollView>
     )
