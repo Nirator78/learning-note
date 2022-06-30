@@ -19,7 +19,7 @@ export default function MyNotes() {
         const username = await StorageService.getStorage("username");
         const response = await NoteService.getNote();
         allNotesContext.setAllNotes(response.reverse());
-        const listFiltered = response.reverse().filter(note => note.author === username);
+        const listFiltered = response.filter(note => note.author === username);
         setUserNotesList(listFiltered);
         setDisplayNoteList(listFiltered);
     };
@@ -31,10 +31,10 @@ export default function MyNotes() {
             setDisplayNoteList(userNotesList);
         }else{ 
             const filterList = (note: INote) => {
-                return note.tags.some(tag => tag.toLowerCase() === text.toLowerCase()) || note.author?.toLowerCase() === text.toLowerCase();
+                return note.tags.some(tag => tag.toLowerCase().includes(text.toLowerCase())) || note.author?.toLowerCase().includes(text.toLowerCase());
             }; 
 
-            const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
+            const listFilteredByTag = userNotesList.filter(filterList);
             setDisplayNoteList(listFilteredByTag);
         }
     };
