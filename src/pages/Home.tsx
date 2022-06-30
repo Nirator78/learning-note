@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Text, ScrollView, View, TextInput, RefreshControl } from "react-native";
+import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
@@ -11,6 +12,7 @@ export default function Home() {
     const [username, setUserName] = useState("");
     const [searchedTag, setSearchedTag] = useState("" as string);
     const [refreshing, setRefreshing] = useState(false);
+    const [nombre, setNombre] = useState(5 as number);
 
     const setDynamicTitle = async () => {
         const username = await StorageService.getStorage("username");
@@ -49,6 +51,10 @@ export default function Home() {
       setRefreshing(false);
     }, []);
 
+    const voirPlus = ()=>{
+        setNombre(nombre+5);
+    }
+
     return (
         <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> }>
             <View style={{justifyContent: "center", alignItems: "center", backgroundColor: "white", padding: 20, margin: 10}}>
@@ -66,12 +72,18 @@ export default function Home() {
                 />
             </View>
             {
-                displayNoteList.length ? displayNoteList.map((note:INote, idx:number) =>{
+                displayNoteList.length ? displayNoteList.slice(0,nombre).map((note:INote, idx:number) =>{
                     return (
                         <Cards key={idx} note={note} getList={getNoteList}/>
                     );
                 }) : null
             }
+            <View style={{alignItems:'center', justifyContent:'center'}}>
+            <BasicButton style={{backgroundColor: "#57A0D2", padding: 10, margin: 10 }} onPress={() => voirPlus()}>
+               <Text>Voir plus</Text>
+            </BasicButton> 
+            </View>
+
         </ScrollView>
     )
 }
