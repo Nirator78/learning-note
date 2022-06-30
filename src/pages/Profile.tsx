@@ -6,7 +6,7 @@ import { LoginContext } from "../utils/Context";
 
 export default function Profile({navigation} : {navigation: any}) {
     const loginContext = useContext(LoginContext);
-    const [username, setUserName] = useState("");
+    const [username, setUsername] = useState("" as string);
 
     const deconnect = async () => {
         StorageService.removeStorage("username");
@@ -14,8 +14,8 @@ export default function Profile({navigation} : {navigation: any}) {
     };
     
     useEffect(()=>{
-        setUserName(loginContext.username);
-    }, []);
+        setUsername(loginContext.username);
+    }, [loginContext.username]);
 
     return (
         <View style={{display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent:'center', backgroundColor: "white", padding:30, margin: 20, borderRadius: 10}}>

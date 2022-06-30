@@ -11,7 +11,7 @@ export default function Home() {
     const loginContext = useContext(LoginContext);
     
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
-    const [username, setUserName] = useState(loginContext.username);
+    const [username, setUsername] = useState("" as string);
     const [searchedTag, setSearchedTag] = useState("" as string);
     const [refreshing, setRefreshing] = useState(false);
     const [nombre, setNombre] = useState(5 as number);
@@ -39,7 +39,8 @@ export default function Home() {
 
     useEffect(()=>{
         getNoteList();
-    }, []);
+        setUsername(loginContext.username);
+    }, [loginContext.username]);
 
     const onRefresh = useCallback(async () => {
       setRefreshing(true);

@@ -11,7 +11,7 @@ import { LoginContext } from "../utils/Context";
 export default function CardsDetails({note} : {note: INote}) {
     const loginContext = useContext(LoginContext);
     const [date, setDate] = useState(note.creation_date as any);
-    const [username, setUsername] = useState(loginContext.username as string);
+    const [username, setUsername] = useState("" as string);
     const [noteInfo, setNoteInfo] = useState({} as INote);
 
     const navigation = useNavigation();
@@ -20,7 +20,8 @@ export default function CardsDetails({note} : {note: INote}) {
         setNoteInfo(note);
         const date = getDateFormated(note.creation_date);
         setDate(date);
-    }, [note]);
+        setUsername(loginContext.username);
+    }, [note, loginContext.username]);
 
     const createTwoButtonAlert = (id : string) =>
     Alert.alert(

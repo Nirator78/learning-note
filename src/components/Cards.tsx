@@ -11,13 +11,14 @@ import { LoginContext } from "../utils/Context";
 export default function Cards({note, getList} : {note: INote, getList: Function}) {
     const [date, setDate] = useState(note.creation_date as any);
     const loginContext = useContext(LoginContext);
-    const [username, setUsername] = useState(loginContext.username as string);
+    const [username, setUsername] = useState("" as string);
     const navigation = useNavigation();
 
     useEffect(() => {
        const date = getDateFormated(note.creation_date);
        setDate(date);
-    }, []);
+       setUsername(loginContext.username);
+    }, [loginContext.username]);
 
     const createTwoButtonAlert = (id : string) =>
     Alert.alert(

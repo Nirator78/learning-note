@@ -23,7 +23,7 @@ export default function Connexion({navigation} : {navigation: any}) {
 
     useEffect(()=>{
         verifIfUserAlreadyConntected();
-    });
+    }, [loginContext.username]);
 
     return (
         <SafeAreaView style={{ flexGrow:1, display: 'flex', alignItems:'center', justifyContent:'center', margin: 20}}>
