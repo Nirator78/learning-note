@@ -1,11 +1,11 @@
 import { useCallback, useContext, useState } from "react";
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Button, ScrollView, RefreshControl } from "react-native";
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, RefreshControl } from "react-native";
 import CheckBox from "expo-checkbox";
-import INote from "../interfaces/NoteInterface";
+import * as ImagePicker from 'expo-image-picker';
 import TagInput from "react-native-tags-input";
+import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 import { LoginContext } from "../utils/Context";
-import * as ImagePicker from 'expo-image-picker';
 import BasicButton from "../components/Button";
 
 export default function Formulaire({navigation, route} : {navigation: any, route: any}) {

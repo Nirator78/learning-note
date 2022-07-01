@@ -3,7 +3,7 @@ import { ScrollView } from "react-native";
 import CardsDetails from "../components/CardsDetail";
 import INote from "../interfaces/NoteInterface";
 
-export default function Detail({navigation, route} : {navigation: any, route: any}) {
+export default function Detail({route} : {route: any}) {
     const [note, setNote] = useState({} as INote)
 
     useEffect(() => {
