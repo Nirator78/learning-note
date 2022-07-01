@@ -17,8 +17,11 @@ export default function Connexion({navigation} : {navigation: any}) {
     };
 
     const verifIfUserAlreadyConntected = async () => {
-        if(loginContext.username)
+        const userSaved = await StorageService.getStorage("username");
+        if(userSaved) {
+            loginContext.setUsername(userSaved);
             navigation.navigate("BottomTabNavigation");
+        }
     };
 
     useEffect(()=>{
