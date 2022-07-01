@@ -1,6 +1,9 @@
 import { createContext } from "react";
 import INote from "../interfaces/NoteInterface";
 
+/**
+ * Context React pour récupérer le username
+ */
 export const LoginContext = createContext(
     {} as {
         username: string;
@@ -8,6 +11,9 @@ export const LoginContext = createContext(
     } 
 );
 
+/**
+ * Context React pour récupérer la liste des notes
+ */
 export const NotesContext = createContext(
     {} as {
         allNotes: INote[];
