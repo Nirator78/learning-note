@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState, useContext} from "react";
 import { Text, ScrollView, StyleSheet, View, TextInput, RefreshControl } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons"
+import TagInput from "react-native-tags-input";
 import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 import { LoginContext, NotesContext } from "../utils/Context";
-import TagInput from "react-native-tags-input";
 
 export default function Home() {
     const allNotesContext = useContext(NotesContext);

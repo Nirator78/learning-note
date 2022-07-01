@@ -1,11 +1,11 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { RefreshControl, StyleSheet, ScrollView, Text, View } from "react-native";
+import TagInput from "react-native-tags-input";
 import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 import { LoginContext, NotesContext } from "../utils/Context";
-import TagInput from "react-native-tags-input";
 
 export default function MyNotes() {
     const allNotesContext = useContext(NotesContext);
