@@ -24,14 +24,14 @@ export default function MyNotes() {
         setDisplayNoteList(listFiltered);
     };
 
-    const filtreNoteListByTag = async (text: string) => {
-        setSearchedTag(text);
+    const filtreNoteListByFiltre = async (textTag: string) => {
+        setSearchedTag(textTag);
         // Si le texte est vide on remet la liste entière
-        if(!text){
+        if(!textTag){
             setDisplayNoteList(userNotesList);
         }else{ 
             const filterList = (note: INote) => {
-                return note.tags.some(tag => tag.toLowerCase().includes(text.toLowerCase())) || note.author?.toLowerCase().includes(text.toLowerCase());
+                return note.tags.some(tag => tag.toLowerCase().includes(textTag.toLowerCase()));
             }; 
 
             const listFilteredByTag = userNotesList.filter(filterList);
@@ -50,7 +50,7 @@ export default function MyNotes() {
     }, []);
 
     const voirPlus = ()=>{
-        setNombre(nombre+5);
+        setNombre(nombre+200);
     }
 
     return (
@@ -59,7 +59,7 @@ export default function MyNotes() {
                 <Text style={{fontWeight: "bold", fontSize: 15}}>Rechercher c'est trouver</Text>
                 <TextInput
                     style={{marginTop:'5%', borderColor: "gray",width: "90%",borderWidth: 0.5,borderRadius: 10,padding: 10}}
-                    onChangeText={(text) => filtreNoteListByTag(text)}
+                    onChangeText={(text) => filtreNoteListByFiltre(text)}
                     value={searchedTag}
                     placeholder="Recherche par tags"
                     autoCapitalize="none"
