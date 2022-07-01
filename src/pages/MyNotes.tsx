@@ -19,7 +19,7 @@ export default function MyNotes() {
     const getMyNoteList = async () => {
         const response = await NoteService.getNote();
         allNotesContext.setAllNotes(response.reverse());
-        const listFiltered = response.filter(note => note.author === loginContext.username);
+        const listFiltered = response.filter(note => note.author === loginContext.username && !note.anonym);
         setUserNotesList(listFiltered);
         setDisplayNoteList(listFiltered);
     };
