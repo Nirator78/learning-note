@@ -26,12 +26,9 @@ export default function Home() {
     const filtreNoteListByFiltre = async (textTag: string, textAuthor: string) => {
         setSearchedTag(textTag);
         setSearchedAuthor(textAuthor);
-        console.log(textTag);
-        console.log(textAuthor)
         // Si le texte est vide on remet la liste entière
         if(!textTag && !textAuthor){
             setDisplayNoteList(allNotesContext.allNotes);
-            console.log("ici")
         }else{
             const filterList = (note: INote) => {
                 return note.tags.some(tag => tag.toLowerCase().includes(textTag.toLowerCase())) && note.author?.toLowerCase().includes(textAuthor.toLowerCase());
