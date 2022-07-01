@@ -6,6 +6,7 @@ import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 import { LoginContext, NotesContext } from "../utils/Context";
+import TagInput from "react-native-tags-input";
 
 export default function Home() {
     const allNotesContext = useContext(NotesContext);
@@ -13,7 +14,10 @@ export default function Home() {
     
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
     const [username, setUsername] = useState("" as string);
-    const [searchedTag, setSearchedTag] = useState("" as string);
+    const [searchedTag, setSearchedTag] = useState({
+        tag: "",
+        tagsArray: []
+    }); 
     const [searchedAuthor, setSearchedAuthor] = useState("" as string);
     const [refreshing, setRefreshing] = useState(false);
     const [nombre, setNombre] = useState(5 as number);
@@ -24,19 +28,37 @@ export default function Home() {
         setDisplayNoteList(response);
     };
 
-    const filtreNoteListByFiltre = async (textTag: string, textAuthor: string) => {
-        setSearchedTag(textTag);
-        setSearchedAuthor(textAuthor);
+    useEffect(() => {
+        console.log(searchedTag, searchedAuthor);
+        filtreNoteListByFiltre(searchedTag.tagsArray, searchedAuthor)
+    }, [searchedTag, searchedAuthor]);
+
+    const filtreNoteListByFiltre = async (textTag: string[], textAuthor: string) => {
         // Si le texte est vide on remet la liste entière
         if(!textTag && !textAuthor){
             setDisplayNoteList(allNotesContext.allNotes);
-        }else{
-            const filterList = (note: INote) => {
-                return note.tags.some(tag => tag.toLowerCase().includes(textTag.toLowerCase())) && note.author?.toLowerCase().includes(textAuthor.toLowerCase());
-            }; 
+        }else{ 
+            console.log("filtre");
+            if(textTag.length){
+                textTag.forEach(tagS => {
+                    const filterList = (note: INote) => {
+                        return note.tags.some(tag => tag.toLowerCase().includes(tagS.toLowerCase())) 
+                        && note.author?.toLowerCase().includes(textAuthor.toLowerCase());
+                    };
+        
+                    const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
+                    setDisplayNoteList(listFilteredByTag);
+                });
+            }else{
+                console.log("!textTag");
+                const filterList = (note: INote) => {
+                    return note.author?.toLowerCase().includes(textAuthor.toLowerCase());
+                };
+    
+                const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
+                setDisplayNoteList(listFilteredByTag);
 
-            const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
-            setDisplayNoteList(listFilteredByTag);
+            }
         }
     };
 
@@ -65,17 +87,15 @@ export default function Home() {
                 <Text style={{fontWeight: "bold", fontSize: 15}}>Rechercher c'est trouver</Text>
                 <TextInput
                     style={{marginTop:'5%', borderColor: "gray",width: "90%",borderWidth: 0.5,borderRadius: 10,padding: 10,}}
-                    onChangeText={(text) => filtreNoteListByFiltre(searchedTag, text)}
+                    onChangeText={setSearchedAuthor}
                     value={searchedAuthor}
                     placeholder="Recherche par auteurs"
                     autoCapitalize="none"
                 />
-                <TextInput
-                    style={{marginTop:'5%', borderColor: "gray",width: "90%",borderWidth: 0.5,borderRadius: 10,padding: 10,}}
-                    onChangeText={(text) => filtreNoteListByFiltre(text, searchedAuthor)}
-                    value={searchedTag}
-                    placeholder="Recherche par tags"
-                    autoCapitalize="none"
+                <TagInput
+                    updateState={setSearchedTag}
+                    tags={searchedTag}
+                    placeholder="Tags de ta note"
                 />
             </View>
             {
