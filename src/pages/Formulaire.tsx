@@ -74,9 +74,11 @@ export default function Formulaire({navigation, route} : {navigation: any, route
 
     const onRefresh = useCallback(async () => {
         // clean le formulaire
+        setRefreshing(true);
         setNote({anonym: false});
         setImage(null);
         setTags({tag: "", tagsArray: []});
+        setRefreshing(false);
       }, []);
 
     return (
