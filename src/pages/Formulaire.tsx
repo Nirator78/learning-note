@@ -111,6 +111,11 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                     </View>
                     <View style={style.textBox}>
+                        <TagInput
+                            updateState={setTags}
+                            tags={tags}
+                            placeholder="Tags de ta note"
+                        />
                     </View>
                 </View>
                 <View style={{flexGrow:1, display: 'flex', flexDirection: 'row', alignItems:'flex-start', justifyContent:'flex-start', padding:10}}>
