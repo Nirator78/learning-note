@@ -47,7 +47,7 @@ export default function CardsDetails({note} : {note: INote}) {
         navigation.navigate("Home");
     };
 
-    // Navigationa  la modification avec les informations de la note
+    // Navigation vers la modification avec les informations de la note
     const goToModification = () => {
         navigation.navigate("Formulaire", {note: note});
     };
