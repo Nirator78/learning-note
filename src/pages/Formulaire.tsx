@@ -101,6 +101,7 @@ export default function Formulaire({navigation, route} : {navigation: any, route
                             updateState={setTags}
                             tags={tags}
                             placeholder="Tags de ta note"
+                            style={{fontSize: 14, }}
                         />  
                     </View>
                 </View>
@@ -136,6 +137,6 @@ const style = StyleSheet.create({
         width: "90%",
         borderWidth: 0.5, 
         borderRadius: 10, 
-        padding: 10
+        paddingTop: 10
     }
 });

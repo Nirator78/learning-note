@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, useContext} from "react";
 import { Text, ScrollView, View, TextInput, RefreshControl } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons"
 import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
@@ -88,7 +89,9 @@ export default function Home() {
                 displayNoteList.length >= nombre && 
                 <View style={{alignItems:'center', justifyContent:'center'}}>
                     <BasicButton style={{backgroundColor: "#57A0D2", padding: 10, margin: 10 }} onPress={() => voirPlus()}>
-                        <Text>Voir plus</Text>
+                        <Ionicons name="add-outline">
+                            <Text>voir plus</Text>
+                        </Ionicons>
                     </BasicButton> 
                 </View>
             }
