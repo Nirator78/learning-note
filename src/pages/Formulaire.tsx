@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Button, ScrollView } from "react-native";
+import { useCallback, useContext, useState } from "react";
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Button, ScrollView, RefreshControl } from "react-native";
 import CheckBox from "expo-checkbox";
 import INote from "../interfaces/NoteInterface";
 import TagInput from "react-native-tags-input";
@@ -16,6 +16,7 @@ export default function Formulaire({navigation, route} : {navigation: any, route
         tagsArray: note.tags || []
     });
     const [image, setImage] = useState(note.image || "" as string);
+    const [refreshing, setRefreshing] = useState(false);
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -65,14 +66,21 @@ export default function Formulaire({navigation, route} : {navigation: any, route
         }
 
         // clean le formulaire
-        setNote({});
+        setNote({anonym: false});
         setImage(null);
         setTags({tag: "", tagsArray: []});
         navigation.navigate("MyNotes");
     };
 
+    const onRefresh = useCallback(async () => {
+        // clean le formulaire
+        setNote({anonym: false});
+        setImage(null);
+        setTags({tag: "", tagsArray: []});
+      }, []);
+
     return (
-        <ScrollView>
+        <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> }>
             <View style={{ display: 'flex', backgroundColor: "white", padding:30, margin: 20, borderRadius: 10 }} >
                 <View style={{ flexGrow:1, display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent:'center'}}>
                     {
