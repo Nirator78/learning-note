@@ -5,6 +5,7 @@ import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
 import NoteService from "../services/NoteService";
 import { LoginContext, NotesContext } from "../utils/Context";
+import TagInput from "react-native-tags-input";
 
 export default function MyNotes() {
     const allNotesContext = useContext(NotesContext);
@@ -12,7 +13,10 @@ export default function MyNotes() {
     
     const [userNotesList, setUserNotesList] = useState([] as INote[]);
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
-    const [searchedTag, setSearchedTag] = useState("" as string);    
+    const [searchedTag, setSearchedTag] = useState({
+        tag: "",
+        tagsArray: []
+    }); 
     const [refreshing, setRefreshing] = useState(false);
     const [nombre, setNombre] = useState(5 as number);
 
@@ -24,18 +28,24 @@ export default function MyNotes() {
         setDisplayNoteList(listFiltered);
     };
 
-    const filtreNoteListByFiltre = async (textTag: string) => {
-        setSearchedTag(textTag);
+    useEffect(() => {
+        filtreNoteListByFiltre(searchedTag.tagsArray)
+    }, [searchedTag]);
+
+
+    const filtreNoteListByFiltre = async (textTag: string[]) => {
         // Si le texte est vide on remet la liste entière
         if(!textTag){
             setDisplayNoteList(userNotesList);
         }else{ 
-            const filterList = (note: INote) => {
-                return note.tags.some(tag => tag.toLowerCase().includes(textTag.toLowerCase()));
-            }; 
-
-            const listFilteredByTag = userNotesList.filter(filterList);
-            setDisplayNoteList(listFilteredByTag);
+            textTag.forEach(tagS => {
+                const filterList = (note: INote) => {
+                    return note.tags.some(tag => tag.toLowerCase().includes(tagS.toLowerCase()));
+                };
+    
+                const listFilteredByTag = userNotesList.filter(filterList);
+                setDisplayNoteList(listFilteredByTag);
+            });
         }
     };
     
@@ -57,13 +67,11 @@ export default function MyNotes() {
         <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <View style={{ flexGrow:1, display: 'flex', alignItems:'center', justifyContent:'center', backgroundColor: "white", padding:20, margin:10, borderRadius: 10 }}>
                 <Text style={{fontWeight: "bold", fontSize: 15}}>Rechercher c'est trouver</Text>
-                <TextInput
-                    style={{marginTop:'5%', borderColor: "gray",width: "90%",borderWidth: 0.5,borderRadius: 10,padding: 10}}
-                    onChangeText={(text) => filtreNoteListByFiltre(text)}
-                    value={searchedTag}
-                    placeholder="Recherche par tags"
-                    autoCapitalize="none"
-                />
+                <TagInput
+                    updateState={setSearchedTag}
+                    tags={searchedTag}
+                    placeholder="Tags de ta note"
+                />  
             </View>
 
             {
