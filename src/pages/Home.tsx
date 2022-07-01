@@ -13,6 +13,7 @@ export default function Home() {
     const [displayNoteList, setDisplayNoteList] = useState([] as INote[]);
     const [username, setUsername] = useState("" as string);
     const [searchedTag, setSearchedTag] = useState("" as string);
+    const [searchedAuthor, setSearchedAuthor] = useState("" as string);
     const [refreshing, setRefreshing] = useState(false);
     const [nombre, setNombre] = useState(5 as number);
 
@@ -22,14 +23,18 @@ export default function Home() {
         setDisplayNoteList(response);
     };
 
-    const filtreNoteListByTag = async (text: string) => {
-        setSearchedTag(text);
+    const filtreNoteListByFiltre = async (textTag: string, textAuthor: string) => {
+        setSearchedTag(textTag);
+        setSearchedAuthor(textAuthor);
+        console.log(textTag);
+        console.log(textAuthor)
         // Si le texte est vide on remet la liste entière
-        if(!text){
+        if(!textTag && !textAuthor){
             setDisplayNoteList(allNotesContext.allNotes);
+            console.log("ici")
         }else{
             const filterList = (note: INote) => {
-                return note.tags.some(tag => tag.toLowerCase().includes(text.toLowerCase())) || note.author?.toLowerCase().includes(text.toLowerCase());
+                return note.tags.some(tag => tag.toLowerCase().includes(textTag.toLowerCase())) && note.author?.toLowerCase().includes(textAuthor.toLowerCase());
             }; 
 
             const listFilteredByTag = allNotesContext.allNotes.filter(filterList);
@@ -62,7 +67,14 @@ export default function Home() {
                 <Text style={{fontWeight: "bold", fontSize: 15}}>Rechercher c'est trouver</Text>
                 <TextInput
                     style={{marginTop:'5%', borderColor: "gray",width: "90%",borderWidth: 0.5,borderRadius: 10,padding: 10,}}
-                    onChangeText={(text) => filtreNoteListByTag(text)}
+                    onChangeText={(text) => filtreNoteListByFiltre(searchedTag, text)}
+                    value={searchedAuthor}
+                    placeholder="Recherche par auteurs"
+                    autoCapitalize="none"
+                />
+                <TextInput
+                    style={{marginTop:'5%', borderColor: "gray",width: "90%",borderWidth: 0.5,borderRadius: 10,padding: 10,}}
+                    onChangeText={(text) => filtreNoteListByFiltre(text, searchedAuthor)}
                     value={searchedTag}
                     placeholder="Recherche par tags"
                     autoCapitalize="none"
