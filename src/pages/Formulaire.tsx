@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Button, ScrollView } from "react-native";
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Button, ScrollView, Platform } from "react-native";
 import CheckBox from "expo-checkbox";
 import INote from "../interfaces/NoteInterface";
 import TagInput from "react-native-tags-input";
@@ -7,14 +7,14 @@ import NoteService from "../services/NoteService";
 import { LoginContext } from "../utils/Context";
 import * as ImagePicker from 'expo-image-picker';
 
-export default function Forulaire({navigation, route} : {navigation: any, route: any}) {
+export default function Formulaire({navigation, route} : {navigation: any, route: any}) {
     const loginContext = useContext(LoginContext);
     const [note, setNote] = useState(route?.params?.note || {anonym: false} as INote);
     const [tags, setTags] = useState({
         tag: "",
         tagsArray: note.tags || []
     });
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(note.image || "" as string);
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -22,15 +22,11 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
           mediaTypes: ImagePicker.MediaTypeOptions.All,
           allowsEditing: false,
           aspect: [4, 3],
-          quality: 1,
-          base64: true
+          quality: 1
         });
-    
-        console.log(result);
-    
+        
         if (!result.cancelled) {
           setImage(result.uri);
-          //setNote({...note, image: result.uri});
         }
       };
 
@@ -50,36 +46,26 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
         // Si anonym à true on vire l'utilisateur courant de l'envoie
         note.author = loginContext.username;
         if(note.anonym){
-            delete note.author;
+            note.author = "";
         }
 
         if(image) {
-            try {
-                // console.log(image);
-                let body = new FormData();
-                body.append('key', '365c743a287fc7f81e8af1ca9750b36e');
-                body.append('image', (image as string).replace('data:', '').replace(/^.+,/, '') );
-                const axios = require("axios");
-                const response = await axios.post('https://api.imgbb.com/1/upload', body);
-                console.log("1", response);
-                const result = await response;
-                console.log("2", result.data.data.url);
-                note.image = result.data.data.url;   
-            } catch (error) {
-                console.log("error", error);
-            }
+            note.image = image;
         }
 
         // On ajoute les tags
-        note.tags = tags.tagsArray;
+        note.tags = tags.tagsArray; 
 
+        // Création ou mise à jour  
         if(note._id) {
             await NoteService.updateNote(note._id, note)
         }else{
             await NoteService.createNote(note)
         }
+
         // clean le formulaire
         setNote({});
+        setImage(null);
         setTags({tag: "", tagsArray: []});
         navigation.navigate("MyNotes");
     };
@@ -108,14 +94,14 @@ export default function Forulaire({navigation, route} : {navigation: any, route:
                     />
                     <View>
                         <Button title="Pick an image from camera roll" onPress={pickImage} />
-                        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                        {image ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : null}
                     </View>
                     <View style={style.textBox}>
                         <TagInput
                             updateState={setTags}
                             tags={tags}
                             placeholder="Tags de ta note"
-                        />
+                        />  
                     </View>
                 </View>
                 <View style={{flexGrow:1, display: 'flex', flexDirection: 'row', alignItems:'flex-start', justifyContent:'flex-start', padding:10}}>
