@@ -23,25 +23,31 @@ export default function CardsDetails({note} : {note: INote}) {
         setUsername(loginContext.username);
     }, [note, loginContext.username]);
 
+    // Alerte suppression
     const createTwoButtonAlert = (id : string) =>
+    // Message de suppression
     Alert.alert(
       "Suppresion",
       "Voulez-vous vraiment supprimer la note ?",
       [
+        // Button annuler
         {
           text: "Annuler",
           onPress: () => console.log("Suppresion annuler"),
           style: "cancel"
         },
+        // Button validation suppression 
         { text: "Valider", onPress: () => deleteNote(id) }
       ]
     );
 
+    // Suppression
     const deleteNote = async (id : string) => {
         await NoteService.deleteNote(id);
         navigation.navigate("Home");
     };
 
+    // Navigationa  la modification avec les informations de la note
     const goToModification = () => {
         navigation.navigate("Formulaire", {note: note});
     };

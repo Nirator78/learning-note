@@ -20,25 +20,31 @@ export default function Cards({note, getList} : {note: INote, getList: Function}
        setUsername(loginContext.username);
     }, [loginContext.username]);
 
+    // Alerte a la suppresion d'une note
     const createTwoButtonAlert = (id : string) =>
-    Alert.alert(
-      "Suppresion",
-      "Voulez-vous vraiment supprimer la note ?",
-      [
-        {
-          text: "Annuler",
-          onPress: () => console.log("Suppresion annuler"),
-          style: "cancel"
-        },
-        { text: "Valider", onPress: () => deleteNote(id) }
-      ]
+        // Texte afficher 
+        Alert.alert(
+        "Suppresion",
+        "Voulez-vous vraiment supprimer la note ?",
+        [
+            // Bouton annuler
+            {
+            text: "Annuler",
+            onPress: () => console.log("Suppresion annuler"),
+            style: "cancel"
+            },
+            // Bouton valider qui valide la suppression
+            { text: "Valider", onPress: () => deleteNote(id) }
+        ]
     );
 
+    // Suppression
     const deleteNote = async (id : string) => {
         await NoteService.deleteNote(id);
         getList();
     };
 
+    // Navigation vers le detail de la note
     const goToDetail = () => {
         navigation.navigate("Detail", {note: note});
     };

@@ -11,6 +11,7 @@ export default function BasicButton({
         style?: TextStyle }) 
     {
     return (
+        // Bouton custom avec passage de style en parametree et tu onPress
         <TouchableOpacity 
             style={{ borderRadius: 10, paddingHorizontal: 24, ...style } }
             onPress={onPress}
