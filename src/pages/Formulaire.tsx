@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Button, ScrollView, Platform } from "react-native";
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Button, ScrollView } from "react-native";
 import CheckBox from "expo-checkbox";
 import INote from "../interfaces/NoteInterface";
 import TagInput from "react-native-tags-input";

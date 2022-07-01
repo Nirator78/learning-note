@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { RefreshControl, ScrollView, Text, TextInput, View } from "react-native";
+import { RefreshControl, StyleSheet, ScrollView, Text, View } from "react-native";
 import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
 import INote from "../interfaces/NoteInterface";
@@ -67,11 +67,14 @@ export default function MyNotes() {
         <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <View style={{ flexGrow:1, display: 'flex', alignItems:'center', justifyContent:'center', backgroundColor: "white", padding:20, margin:10, borderRadius: 10 }}>
                 <Text style={{fontWeight: "bold", fontSize: 15}}>Rechercher c'est trouver</Text>
-                <TagInput
-                    updateState={setSearchedTag}
-                    tags={searchedTag}
-                    placeholder="Tags de ta note"
-                />  
+                <View style={style.textBox}>
+                    <TagInput
+                        updateState={setSearchedTag}
+                        tags={searchedTag}
+                        placeholder="Rechercher par tags"
+                        style={{fontSize: 14, }}
+                    />  
+                </View>
             </View>
 
             {
@@ -92,3 +95,15 @@ export default function MyNotes() {
         </ScrollView>
     )
 }
+
+const style = StyleSheet.create({
+    textBox:{
+        marginTop:'5%', 
+        justifyContent: "center", 
+        borderColor: "gray",
+        width: "90%",
+        borderWidth: 0.5, 
+        borderRadius: 10, 
+        paddingTop: 10
+    }
+});

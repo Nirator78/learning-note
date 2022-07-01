@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useContext} from "react";
-import { Text, ScrollView, View, TextInput, RefreshControl } from "react-native";
+import { Text, ScrollView, StyleSheet, View, TextInput, RefreshControl } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons"
 import BasicButton from "../components/Button";
 import Cards from "../components/Cards";
@@ -29,7 +29,6 @@ export default function Home() {
     };
 
     useEffect(() => {
-        console.log(searchedTag, searchedAuthor);
         filtreNoteListByFiltre(searchedTag.tagsArray, searchedAuthor)
     }, [searchedTag, searchedAuthor]);
 
@@ -38,7 +37,6 @@ export default function Home() {
         if(!textTag && !textAuthor){
             setDisplayNoteList(allNotesContext.allNotes);
         }else{ 
-            console.log("filtre");
             if(textTag.length){
                 textTag.forEach(tagS => {
                     const filterList = (note: INote) => {
@@ -50,7 +48,6 @@ export default function Home() {
                     setDisplayNoteList(listFilteredByTag);
                 });
             }else{
-                console.log("!textTag");
                 const filterList = (note: INote) => {
                     return note.author?.toLowerCase().includes(textAuthor.toLowerCase());
                 };
@@ -92,11 +89,14 @@ export default function Home() {
                     placeholder="Recherche par auteurs"
                     autoCapitalize="none"
                 />
-                <TagInput
-                    updateState={setSearchedTag}
-                    tags={searchedTag}
-                    placeholder="Tags de ta note"
-                />
+                <View style={style.textBox}>
+                    <TagInput
+                        updateState={setSearchedTag}
+                        tags={searchedTag}
+                        placeholder="Rechercher par tags"
+                        style={{fontSize: 14, }}
+                    />
+                </View>
             </View>
             {
                 displayNoteList.length ? displayNoteList.slice(0, nombre).map((note:INote, idx:number) =>{
@@ -119,3 +119,15 @@ export default function Home() {
         </ScrollView>
     )
 }
+
+const style = StyleSheet.create({
+    textBox:{
+        marginTop:'5%', 
+        justifyContent: "center", 
+        borderColor: "gray",
+        width: "90%",
+        borderWidth: 0.5, 
+        borderRadius: 10, 
+        paddingTop: 10
+    }
+});
