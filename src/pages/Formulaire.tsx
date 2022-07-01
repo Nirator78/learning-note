@@ -6,6 +6,7 @@ import TagInput from "react-native-tags-input";
 import NoteService from "../services/NoteService";
 import { LoginContext } from "../utils/Context";
 import * as ImagePicker from 'expo-image-picker';
+import BasicButton from "../components/Button";
 
 export default function Formulaire({navigation, route} : {navigation: any, route: any}) {
     const loginContext = useContext(LoginContext);
@@ -87,14 +88,17 @@ export default function Formulaire({navigation, route} : {navigation: any, route
                         placeholder={"Titre"}
                     />
                     <TextInput
-                        style={{marginTop:'5%', justifyContent: "center", borderColor: "gray",width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
+                        style={{marginTop:'5%', justifyContent: "center", borderColor: "gray", width: "90%",borderWidth: 0.5, borderRadius: 10, padding: 10}}
                         onChangeText={setText}
                         value={note.text}
                         placeholder={"Le texte"}
                     />
-                    <View>
-                        <Button title="Pick an image from camera roll" onPress={pickImage} />
-                        {image ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : null}
+                    <View style={{display: 'flex', flexDirection: 'column', marginTop:'5%', justifyContent: "flex-start",alignItems:'flex-start', borderColor: "gray", width: "90%",borderWidth: 0.5, borderRadius: 10, paddingTop: 10, paddingBottom: 10}}>
+                        
+                        <BasicButton onPress={pickImage} >
+                            <Text style={{color:'blue'}}>Choisir une image</Text>
+                            {image ? <Image source={{ uri: image }} style={{ width: 50, height: 50 }} /> : null}
+                        </BasicButton>
                     </View>
                     <View style={style.textBox}>
                         <TagInput
